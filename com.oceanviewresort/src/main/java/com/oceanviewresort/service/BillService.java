@@ -1,33 +1,21 @@
 package com.oceanviewresort.service;
 
-import com.oceanviewresort.model.RoomType;
-import java.util.Date;
+import com.oceanviewresort.model.Reservation;
+import java.sql.SQLException;
+import java.time.temporal.ChronoUnit;
 
 public class BillService {
     
-    public double calculateTotalAmount(String roomType, Date checkInDate, Date checkOutDate) {
-        long diffInMillies = Math.abs(checkOutDate.getTime() - checkInDate.getTime());
-        int numberOfNights = (int) (diffInMillies / (1000 * 60 * 60 * 24));
+    public double calculateBill(Reservation reservation) {
+        // Calculate the number of days between check-in and check-out dates
+        long numberOfDays = ChronoUnit.DAYS.between(
+            reservation.getCheckInDate(),
+            reservation.getCheckOutDate()
+        );
         
-        RoomType rt = RoomType.valueOf(roomType.toUpperCase());
-        double ratePerNight = rt.getRate();
+        // Calculate total bill based on room price per night * number of nights
+        double totalBill = reservation.getRoomType().getPricePerNight() * numberOfDays;
         
-        return numberOfNights * ratePerNight;
-    }
-    
-    public String generateBill(int reservationId, String guestName, 
-                              String roomType, Date checkInDate, Date checkOutDate, 
-                              double totalAmount) {
-        StringBuilder bill = new StringBuilder();
-        bill.append("=== OCEAN VIEW RESORT BILL ===\n");
-        bill.append("Reservation ID: ").append(reservationId).append("\n");
-        bill.append("Guest Name: ").append(guestName).append("\n");
-        bill.append("Room Type: ").append(roomType).append("\n");
-        bill.append("Check-in Date: ").append(checkInDate.toString()).append("\n");
-        bill.append("Check-out Date: ").append(checkOutDate.toString()).append("\n");
-        bill.append("Total Amount: LKR ").append(String.format("%.2f", totalAmount)).append("\n");
-        bill.append("==================================\n");
-        
-        return bill.toString();
+        return totalBill;
     }
 }

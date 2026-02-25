@@ -1,32 +1,40 @@
 package com.oceanviewresort.service;
 
-import com.oceanviewresort.dao.GuestDAO;
 import com.oceanviewresort.dao.ReservationDAO;
-import com.oceanviewresort.model.Guest;
 import com.oceanviewresort.model.Reservation;
 
-import java.util.Date;
+import java.sql.SQLException;
+import java.util.List;
 
 public class ReservationService {
-    private GuestDAO guestDAO;
+    
     private ReservationDAO reservationDAO;
     
     public ReservationService() {
-        this.guestDAO = new GuestDAO();
         this.reservationDAO = new ReservationDAO();
     }
     
-    public int addGuest(String name, String address, String contactNumber) {
-        Guest guest = new Guest(0, name, address, contactNumber);
-        return guestDAO.addGuest(guest);
+    public int createReservation(Reservation reservation) throws SQLException {
+        return reservationDAO.createReservation(reservation);
     }
     
-    public int addReservation(int guestId, String roomType, Date checkInDate, Date checkOutDate) {
-        Reservation reservation = new Reservation(0, guestId, roomType, checkInDate, checkOutDate);
-        return reservationDAO.addReservation(reservation);
+    public Reservation getReservationById(int id) throws SQLException {
+        return reservationDAO.getReservationById(id);
     }
     
-    public Reservation getReservation(int reservationId) {
-        return reservationDAO.getReservationById(reservationId);
+    public List<Reservation> getAllReservations() throws SQLException {
+        return reservationDAO.getAllReservations();
+    }
+    
+    public List<Reservation> getReservationsByGuestId(int guestId) throws SQLException {
+        return reservationDAO.getReservationsByGuestId(guestId);
+    }
+    
+    public boolean updateReservation(Reservation reservation) throws SQLException {
+        return reservationDAO.updateReservation(reservation);
+    }
+    
+    public boolean deleteReservation(int id) throws SQLException {
+        return reservationDAO.deleteReservation(id);
     }
 }
