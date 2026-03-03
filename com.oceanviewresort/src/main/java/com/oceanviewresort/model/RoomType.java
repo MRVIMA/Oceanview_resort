@@ -2,46 +2,69 @@ package com.oceanviewresort.model;
 
 public class RoomType {
     private int id;
-    private String name;
+    private String typeName;
     private String description;
-    private double pricePerNight;
     private int maxGuests;
-    
+    private double pricePerNight;
+
     public RoomType() {}
     
-    public RoomType(int id, String name, String description, double pricePerNight, int maxGuests) {
+    public RoomType(int id, String typeName, String description, int maxGuests, double pricePerNight) {
         this.id = id;
-        this.name = name;
+        this.typeName = typeName;
         this.description = description;
+        this.maxGuests = maxGuests;
         this.pricePerNight = pricePerNight;
+    }
+    
+    public int getId() {
+        return id;
+    }
+    
+    public String getTypeName() {
+        return typeName;
+    }
+    
+    public String getDescription() {
+        return description;
+    }
+    
+    public int getMaxGuests() {
+        return maxGuests;
+    }
+    
+    public double getPricePerNight() {
+        return pricePerNight;
+    }
+    
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+    
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
+    public void setMaxGuests(int maxGuests) {
         this.maxGuests = maxGuests;
     }
     
-    // Getters and setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
-    
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-    
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-    
-    public double getPricePerNight() { return pricePerNight; }
-    public void setPricePerNight(double pricePerNight) { this.pricePerNight = pricePerNight; }
-    
-    public int getMaxGuests() { return maxGuests; }
-    public void setMaxGuests(int maxGuests) { this.maxGuests = maxGuests; }
+    public void setPricePerNight(double pricePerNight) {
+        this.pricePerNight = pricePerNight;
+    }
     
     @Override
     public String toString() {
         return "RoomType{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", typeName='" + typeName + '\'' +
                 ", description='" + description + '\'' +
-                ", pricePerNight=" + pricePerNight +
                 ", maxGuests=" + maxGuests +
+                ", pricePerNight=" + pricePerNight +
                 '}';
     }
 }
-

@@ -1,29 +1,51 @@
 package com.oceanviewresort.util;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class DateUtil {
+    private static final String DATE_FORMAT = "yyyy-MM-dd";
+    private static final String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     
-    public static boolean isValidDate(String dateStr) {
+    public static String formatDate(Date date) {
+        if (date == null) {
+            return null;
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+        return sdf.format(date);
+    }
+    
+    public static String formatDateTime(Date date) {
+        if (date == null) {
+            return null;
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat(DATETIME_FORMAT);
+        return sdf.format(date);
+    }
+    
+    public static Date parseDate(String dateString) {
+        if (dateString == null) {
+            return null;
+        }
         try {
-            LocalDate.parse(dateStr);
+            SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+            return sdf.parse(dateString);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+    public static boolean isDateValid(String dateString) {
+        if (dateString == null) {
+            return false;
+        }
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+            sdf.setLenient(false);
+            sdf.parse(dateString);
             return true;
         } catch (Exception e) {
             return false;
         }
-    }
-    
-    public static long getDaysBetween(LocalDate start, LocalDate end) {
-        return ChronoUnit.DAYS.between(start, end);
-    }
-    
-    public static String formatDate(LocalDate date) {
-        return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-    }
-    
-    public static String formatDisplayDate(LocalDate date) {
-        return date.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
     }
 }

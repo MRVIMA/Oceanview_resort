@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 
 @WebServlet("/calculate-bill")
 public class CalculateBillServlet extends HttpServlet {
@@ -19,36 +18,24 @@ public class CalculateBillServlet extends HttpServlet {
     
     @Override
     public void init() throws ServletException {
-        reservationService = new ReservationService();
-        billService = new BillService();
+        this.reservationService = new ReservationService();
+        this.billService = new BillService();
     }
     
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
+        int reservationId = Integer.parseInt(request.getParameter("id"));
+        Reservation reservation = reservationService.getReservationById(reservationId);
         
-        try {
-            String reservationIdStr = request.getParameter("reservationId");
-            
-            if (reservationIdStr != null && !reservationIdStr.isEmpty()) {
-                int reservationId = Integer.parseInt(reservationIdStr);
-                Reservation reservation = reservationService.getReservationById(reservationId);
-                
-                if (reservation != null) {
-                    double billAmount = billService.calculateBill(reservation);
-                    request.setAttribute("reservation", reservation);
-                    request.setAttribute("billAmount", billAmount);
-                } else {
-                    request.setAttribute("errorMessage", "Reservation not found");
-                }
-            }
-            
+        if (reservation != null) {
+            double totalBill = billService.calculateTotalBill(reservation);
+            request.setAttribute("reservation", reservation);
+            request.setAttribute("totalBill", totalBill);
             request.getRequestDispatcher("/bill-calculation.jsp").forward(request, response);
-        } catch (SQLException e) {
-            throw new ServletException(e);
-        } catch (NumberFormatException e) {
-            request.setAttribute("errorMessage", "Invalid reservation ID");
-            doGet(request, response);
+        } else {
+            request.setAttribute("error", "Reservation not found");
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }
 }

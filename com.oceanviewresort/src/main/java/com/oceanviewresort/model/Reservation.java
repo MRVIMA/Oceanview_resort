@@ -1,66 +1,97 @@
 package com.oceanviewresort.model;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public class Reservation {
-    private int id;
-    private Guest guest;
-    private RoomType roomType;
-    private LocalDate checkInDate;
-    private LocalDate checkOutDate;
-    private int numberOfGuests;
+    private int reservationId;
+    private int guestId;
+    private int roomTypeId;
+    private Date checkInDate;
+    private Date checkOutDate;
     private double totalAmount;
     private String status;
     
+    // Default constructor
     public Reservation() {}
     
-    public Reservation(int id, Guest guest, RoomType roomType, 
-                      LocalDate checkInDate, LocalDate checkOutDate,
-                      int numberOfGuests, double totalAmount, String status) {
-        this.id = id;
-        this.guest = guest;
-        this.roomType = roomType;
+    // Constructor with parameters
+    public Reservation(int reservationId, int guestId, int roomTypeId, 
+                      Date checkInDate, Date checkOutDate, double totalAmount, String status) {
+        this.reservationId = reservationId;
+        this.guestId = guestId;
+        this.roomTypeId = roomTypeId;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
-        this.numberOfGuests = numberOfGuests;
         this.totalAmount = totalAmount;
         this.status = status;
     }
     
-    // Getters and setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    // Getters
+    public int getReservationId() {
+        return reservationId;
+    }
     
-    public Guest getGuest() { return guest; }
-    public void setGuest(Guest guest) { this.guest = guest; }
+    public int getGuestId() {
+        return guestId;
+    }
     
-    public RoomType getRoomType() { return roomType; }
-    public void setRoomType(RoomType roomType) { this.roomType = roomType; }
+    public int getRoomTypeId() {
+        return roomTypeId;
+    }
     
-    public LocalDate getCheckInDate() { return checkInDate; }
-    public void setCheckInDate(LocalDate checkInDate) { this.checkInDate = checkInDate; }
+    public Date getCheckInDate() {
+        return checkInDate;
+    }
     
-    public LocalDate getCheckOutDate() { return checkOutDate; }
-    public void setCheckOutDate(LocalDate checkOutDate) { this.checkOutDate = checkOutDate; }
+    public Date getCheckOutDate() {
+        return checkOutDate;
+    }
     
-    public int getNumberOfGuests() { return numberOfGuests; }
-    public void setNumberOfGuests(int numberOfGuests) { this.numberOfGuests = numberOfGuests; }
+    public double getTotalAmount() {
+        return totalAmount;
+    }
     
-    public double getTotalAmount() { return totalAmount; }
-    public void setTotalAmount(double totalAmount) { this.totalAmount = totalAmount; }
+    public String getStatus() {
+        return status;
+    }
     
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    // Setters
+    public void setReservationId(int reservationId) {
+        this.reservationId = reservationId;
+    }
+    
+    public void setGuestId(int guestId) {
+        this.guestId = guestId;
+    }
+    
+    public void setRoomTypeId(int roomTypeId) {
+        this.roomTypeId = roomTypeId;
+    }
+    
+    public void setCheckInDate(Date checkInDate) {
+        this.checkInDate = checkInDate;
+    }
+    
+    public void setCheckOutDate(Date checkOutDate) {
+        this.checkOutDate = checkOutDate;
+    }
+    
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+    
+    public void setStatus(String status) {
+        this.status = status;
+    }
     
     @Override
     public String toString() {
         return "Reservation{" +
-                "id=" + id +
-                ", guest=" + guest +
-                ", roomType=" + roomType +
+                "reservationId=" + reservationId +
+                ", guestId=" + guestId +
+                ", roomTypeId=" + roomTypeId +
                 ", checkInDate=" + checkInDate +
                 ", checkOutDate=" + checkOutDate +
-                ", numberOfGuests=" + numberOfGuests +
                 ", totalAmount=" + totalAmount +
                 ", status='" + status + '\'' +
                 '}';

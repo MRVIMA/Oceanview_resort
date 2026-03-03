@@ -1,17 +1,19 @@
 package com.oceanviewresort.model;
 
 public class Guest {
-    private int id;
+    private int guestId;
     private String firstName;
     private String lastName;
     private String email;
     private String phone;
     private String address;
     
+    // Default constructor
     public Guest() {}
     
-    public Guest(int id, String firstName, String lastName, String email, String phone, String address) {
-        this.id = id;
+    // Constructor with parameters
+    public Guest(int guestId, String firstName, String lastName, String email, String phone, String address) {
+        this.guestId = guestId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -19,29 +21,60 @@ public class Guest {
         this.address = address;
     }
     
-    // Getters and setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    // Getters
+    public int getGuestId() {
+        return guestId;
+    }
     
-    public String getFirstName() { return firstName; }
-    public void setFirstName(String firstName) { this.firstName = firstName; }
+    public String getFirstName() {
+        return firstName;
+    }
     
-    public String getLastName() { return lastName; }
-    public void setLastName(String lastName) { this.lastName = lastName; }
+    public String getLastName() {
+        return lastName;
+    }
     
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public String getEmail() {
+        return email;
+    }
     
-    public String getPhone() { return phone; }
-    public void setPhone(String phone) { this.phone = phone; }
+    public String getPhone() {
+        return phone;
+    }
     
-    public String getAddress() { return address; }
-    public void setAddress(String address) { this.address = address; }
+    public String getAddress() {
+        return address;
+    }
+    
+    // Setters
+    public void setGuestId(int guestId) {
+        this.guestId = guestId;
+    }
+    
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+    
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+    
+    public void setAddress(String address) {
+        this.address = address;
+    }
     
     @Override
     public String toString() {
         return "Guest{" +
-                "id=" + id +
+                "guestId=" + guestId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +

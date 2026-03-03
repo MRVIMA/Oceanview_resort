@@ -11,7 +11,7 @@ import java.io.IOException;
 public class HelpServlet extends HttpServlet {
     
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         request.getRequestDispatcher("/help.jsp").forward(request, response);
     }

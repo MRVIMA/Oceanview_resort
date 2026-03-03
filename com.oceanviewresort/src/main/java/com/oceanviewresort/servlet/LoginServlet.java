@@ -1,8 +1,6 @@
 package com.oceanviewresort.servlet;
 
-import com.oceanviewresort.service.AuthService;
-import com.oceanviewresort.model.User;
-
+import com.oceanviewresort.dao.UserDAO;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,38 +12,37 @@ import java.sql.SQLException;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
-    private AuthService authService;
+    private UserDAO userDAO;
     
     @Override
     public void init() throws ServletException {
-        authService = new AuthService();
+        userDAO = new UserDAO();
     }
     
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         request.getRequestDispatcher("/login.jsp").forward(request, response);
     }
     
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         
         try {
-            User user = authService.authenticate(username, password);
-            if (user != null) {
+            if (userDAO.authenticateUser(username, password)) {
                 HttpSession session = request.getSession();
-                session.setAttribute("user", user);
+                session.setAttribute("username", username);
                 response.sendRedirect("main-menu.jsp");
             } else {
-                request.setAttribute("errorMessage", "Invalid username or password");
+                request.setAttribute("error", "Invalid username or password");
                 request.getRequestDispatcher("/login.jsp").forward(request, response);
             }
         } catch (SQLException e) {
-            throw new ServletException(e);
+            throw new ServletException("Database error during login", e);
         }
     }
 }
