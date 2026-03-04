@@ -1,64 +1,81 @@
 package com.oceanviewresort.servlet;
 
+import com.oceanviewresort.dao.*;
+import com.oceanviewresort.model.Guest;
 import com.oceanviewresort.model.Reservation;
-import com.oceanviewresort.model.RoomType;
-import com.oceanviewresort.service.ReservationService;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.SQLException;
+import java.time.LocalDate;
 
 @WebServlet("/add-reservation")
 public class AddReservationServlet extends HttpServlet {
-    private ReservationService reservationService;
-    
+    private GuestDAO guestDAO;
+    private ReservationDAO reservationDAO;
+    private RoomTypeDAO roomTypeDAO;
+
     @Override
     public void init() throws ServletException {
-        this.reservationService = new ReservationService();
+        guestDAO = new GuestDAO();
+        reservationDAO = new ReservationDAO();
+        roomTypeDAO = new RoomTypeDAO();
     }
-    
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException {
-        request.getRequestDispatcher("/add-reservation.jsp").forward(request, response);
-    }
-    
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            int guestId = Integer.parseInt(request.getParameter("guestId"));
-            RoomType roomType = RoomType.valueOf(request.getParameter("roomType"));
-            
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date checkInDate = sdf.parse(request.getParameter("checkInDate"));
-            Date checkOutDate = sdf.parse(request.getParameter("checkOutDate"));
-            
+            String firstName = request.getParameter("first_name");
+            String lastName = request.getParameter("last_name");
+            String email = request.getParameter("email");
+            String phone = request.getParameter("phone");
+            String address = request.getParameter("address");
+            int roomTypeId = Integer.parseInt(request.getParameter("room_type_id"));
+            LocalDate checkInDate = LocalDate.parse(request.getParameter("check_in_date"));
+            LocalDate checkOutDate = LocalDate.parse(request.getParameter("check_out_date"));
+
+            // Create guest
+            Guest guest = new Guest();
+            guest.setFirst_name(firstName);
+            guest.setLast_name(lastName);
+            guest.setEmail(email);
+            guest.setPhone(phone);
+            guest.setAddress(address);
+
+            int guestId = guestDAO.addGuest(guest);
+
+            // Calculate total amount
+            double totalAmount = reservationDAO.calculateTotalAmount(roomTypeId, checkInDate, checkOutDate);
+
+            // Create reservation
             Reservation reservation = new Reservation();
-            reservation.setGuestId(guestId);
-            reservation.setRoomType(roomType);
-            reservation.setCheckInDate(checkInDate);
-            reservation.setCheckOutDate(checkOutDate);
-            reservation.setStatus("CONFIRMED");
-            
-            boolean success = reservationService.addReservation(reservation);
-            
-            if (success) {
-                request.setAttribute("message", "Reservation added successfully!");
-                request.getRequestDispatcher("/add-reservation.jsp").forward(request, response);
-            } else {
-                request.setAttribute("error", "Failed to add reservation. Please try again.");
-                request.getRequestDispatcher("/add-reservation.jsp").forward(request, response);
-            }
-        } catch (ParseException e) {
-            request.setAttribute("error", "Invalid date format. Use yyyy-MM-dd");
-            request.getRequestDispatcher("/add-reservation.jsp").forward(request, response);
+            reservation.setGuest_id(guestId);
+            reservation.setRoom_type_id(roomTypeId);
+            reservation.setCheck_in_date(checkInDate);
+            reservation.setCheck_out_date(checkOutDate);
+            reservation.setTotal_amount(totalAmount);
+            reservation.setStatus("confirmed");
+
+            int reservationId = reservationDAO.addReservation(reservation);
+
+            request.setAttribute("reservationId", reservationId);
+            request.getRequestDispatcher("reservation-success.jsp").forward(request, response);
+
+        } catch (SQLException e) {
+            throw new ServletException(e);
+        }
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            request.setAttribute("roomTypes", roomTypeDAO.getAllRoomTypes());
+            request.getRequestDispatcher("add-reservation.jsp").forward(request, response);
+        } catch (SQLException e) {
+            throw new ServletException(e);
         }
     }
 }

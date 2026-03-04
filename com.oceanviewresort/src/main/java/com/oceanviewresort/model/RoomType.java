@@ -1,70 +1,42 @@
 package com.oceanviewresort.model;
 
-public class RoomType {
-    private int id;
-    private String typeName;
-    private String description;
-    private int maxGuests;
-    private double pricePerNight;
+import java.math.BigDecimal;
 
+public class RoomType {
+    private int room_type_id;
+    private String type_name;
+    private String description;
+    private double base_price;
+    private int capacity;
+    private String amenities;
+    
+    // Constructors
     public RoomType() {}
     
-    public RoomType(int id, String typeName, String description, int maxGuests, double pricePerNight) {
-        this.id = id;
-        this.typeName = typeName;
+    public RoomType(String type_name, String description, double base_price, int capacity, String amenities) {
+        this.type_name = type_name;
         this.description = description;
-        this.maxGuests = maxGuests;
-        this.pricePerNight = pricePerNight;
+        this.base_price = base_price;
+        this.capacity = capacity;
+        this.amenities = amenities;
     }
     
-    public int getId() {
-        return id;
-    }
+    // Getters and Setters
+    public int getRoom_type_id() { return room_type_id; }
+    public void setRoom_type_id(int room_type_id) { this.room_type_id = room_type_id; }
     
-    public String getTypeName() {
-        return typeName;
-    }
+    public String getType_name() { return type_name; }
+    public void setType_name(String type_name) { this.type_name = type_name; }
     
-    public String getDescription() {
-        return description;
-    }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
     
-    public int getMaxGuests() {
-        return maxGuests;
-    }
+    public double getBase_price() { return base_price; }
+    public void setBase_price(double base_price) { this.base_price = base_price; }
     
-    public double getPricePerNight() {
-        return pricePerNight;
-    }
+    public int getCapacity() { return capacity; }
+    public void setCapacity(int capacity) { this.capacity = capacity; }
     
-    public void setId(int id) {
-        this.id = id;
-    }
-    
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
-    }
-    
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    
-    public void setMaxGuests(int maxGuests) {
-        this.maxGuests = maxGuests;
-    }
-    
-    public void setPricePerNight(double pricePerNight) {
-        this.pricePerNight = pricePerNight;
-    }
-    
-    @Override
-    public String toString() {
-        return "RoomType{" +
-                "id=" + id +
-                ", typeName='" + typeName + '\'' +
-                ", description='" + description + '\'' +
-                ", maxGuests=" + maxGuests +
-                ", pricePerNight=" + pricePerNight +
-                '}';
-    }
+    public String getAmenities() { return amenities; }
+    public void setAmenities(String amenities) { this.amenities = amenities; }
 }

@@ -1,10 +1,7 @@
 package com.oceanviewresort.service;
 
-import com.oceanviewresort.dao.ReservationDAO;
 import com.oceanviewresort.model.Reservation;
-import com.oceanviewresort.model.RoomType;
-
-import java.util.Date;
+import com.oceanviewresort.dao.ReservationDAO;
 import java.util.List;
 
 public class ReservationService {
@@ -14,94 +11,57 @@ public class ReservationService {
         this.reservationDAO = new ReservationDAO();
     }
     
-    public boolean createReservation(Reservation reservation) {
-        if (reservation == null) {
+    public boolean addReservation(Reservation reservation) {
+        try {
+            return reservationDAO.insertReservation(reservation);
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
-        
-        // Validate required fields
-        if (reservation.getGuestId() <= 0 || 
-            reservation.getRoomType() == null ||
-            reservation.getCheckInDate() == null ||
-            reservation.getCheckOutDate() == null) {
-            return false;
-        }
-        
-        return reservationDAO.createReservation(reservation);
     }
     
     public Reservation getReservationById(int reservationId) {
-        if (reservationId <= 0) {
+        try {
+            return reservationDAO.getReservationById(reservationId);
+        } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
-        return reservationDAO.getReservationById(reservationId);
     }
     
     public List<Reservation> getAllReservations() {
-        return reservationDAO.getAllReservations();
-    }
-    
-    public List<Reservation> getReservationsByGuestId(int guestId) {
-        if (guestId <= 0) {
+        try {
+            return reservationDAO.getAllReservations();
+        } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
-        return reservationDAO.getReservationsByGuestId(guestId);
-    }
-    
-    public List<Reservation> getReservationsByDateRange(Date checkInFrom, Date checkInTo) {
-        if (checkInFrom == null || checkInTo == null) {
-            return null;
-        }
-        return reservationDAO.getReservationsByDateRange(checkInFrom, checkInTo);
     }
     
     public boolean updateReservation(Reservation reservation) {
-        if (reservation == null || reservation.getId() <= 0) {
+        try {
+            return reservationDAO.updateReservation(reservation);
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
-        
-        // Validate required fields
-        if (reservation.getGuestId() <= 0 || 
-            reservation.getRoomType() == null ||
-            reservation.getCheckInDate() == null ||
-            reservation.getCheckOutDate() == null) {
-            return false;
-        }
-        
-        return reservationDAO.updateReservation(reservation);
     }
     
     public boolean deleteReservation(int reservationId) {
-        if (reservationId <= 0) {
+        try {
+            return reservationDAO.deleteReservation(reservationId);
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
-        return reservationDAO.deleteReservation(reservationId);
     }
     
-    public boolean isRoomAvailable(RoomType roomType, Date checkInDate, Date checkOutDate) {
-        if (roomType == null || checkInDate == null || checkOutDate == null) {
-            return false;
+    public double calculateTotalAmount(int roomTypeId, String checkInDate, String checkOutDate) {
+        try {
+            return reservationDAO.calculateTotalAmount(roomTypeId, checkInDate, checkOutDate);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0.0;
         }
-        
-        // Check for overlapping reservations
-        List<Reservation> overlappingReservations = reservationDAO.getOverlappingReservations(
-            roomType, checkInDate, checkOutDate);
-        
-        return overlappingReservations.isEmpty();
-    }
-    
-    public List<Reservation> getUpcomingReservations(Date date) {
-        if (date == null) {
-            return null;
-        }
-        return reservationDAO.getUpcomingReservations(date);
-    }
-    
-    public int getTotalReservationsCount() {
-        return reservationDAO.getTotalReservationsCount();
-    }
-    
-    public double getAverageReservationValue() {
-        return reservationDAO.getAverageReservationValue();
     }
 }
