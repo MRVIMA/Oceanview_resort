@@ -12,8 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReservationDAO {
+    
     public int addReservation(Reservation reservation) throws SQLException {
-        String sql = "INSERT INTO Reservation (guest_id, room_type_id, check_in_date, check_out_date, total_amount, status) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO reservation (guest_id, room_type_id, check_in_date, check_out_date, total_amount, status) VALUES (?, ?, ?, ?, ?, ?)";
         
         try (Connection connection = DatabaseUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -42,7 +43,7 @@ public class ReservationDAO {
     }
     
     public Reservation getReservationById(int reservation_id) throws SQLException {
-        String sql = "SELECT * FROM Reservation WHERE reservation_id = ?";
+        String sql = "SELECT * FROM reservation WHERE reservation_id = ?";
         
         try (Connection connection = DatabaseUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -67,7 +68,7 @@ public class ReservationDAO {
     
     public List<Reservation> getAllReservations() throws SQLException {
         List<Reservation> reservations = new ArrayList<>();
-        String sql = "SELECT * FROM Reservation";
+        String sql = "SELECT * FROM reservation";
         
         try (Connection connection = DatabaseUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql);
@@ -86,6 +87,38 @@ public class ReservationDAO {
             }
         }
         return reservations;
+    }
+    
+    public boolean updateReservation(Reservation reservation) throws SQLException {
+        String sql = "UPDATE reservation SET guest_id = ?, room_type_id = ?, check_in_date = ?, check_out_date = ?, total_amount = ?, status = ? WHERE reservation_id = ?";
+        
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            
+            statement.setInt(1, reservation.getGuest_id());
+            statement.setInt(2, reservation.getRoom_type_id());
+            statement.setDate(3, java.sql.Date.valueOf(reservation.getCheck_in_date()));
+            statement.setDate(4, java.sql.Date.valueOf(reservation.getCheck_out_date()));
+            statement.setDouble(5, reservation.getTotal_amount());
+            statement.setString(6, reservation.getStatus());
+            statement.setInt(7, reservation.getReservation_id());
+            
+            int affectedRows = statement.executeUpdate();
+            return affectedRows > 0;
+        }
+    }
+
+    public boolean deleteReservation(int reservation_id) throws SQLException {
+        String sql = "DELETE FROM reservation WHERE reservation_id = ?";
+        
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            
+            statement.setInt(1, reservation_id);
+            
+            int affectedRows = statement.executeUpdate();
+            return affectedRows > 0;
+        }
     }
     
     public double calculateTotalAmount(int room_type_id, LocalDate checkIn, LocalDate checkOut) throws SQLException {

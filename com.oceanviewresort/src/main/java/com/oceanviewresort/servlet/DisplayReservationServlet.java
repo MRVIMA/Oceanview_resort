@@ -22,7 +22,12 @@ public class DisplayReservationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            int reservationId = Integer.parseInt(request.getParameter("reservation_id"));
+            String idParam = request.getParameter("reservation_id");
+            if (idParam == null || idParam.isEmpty()) {
+                throw new NumberFormatException("ID cannot be empty");
+            }
+            
+            int reservationId = Integer.parseInt(idParam);
             Reservation reservation = reservationDAO.getReservationById(reservationId);
 
             if (reservation != null) {
@@ -32,8 +37,9 @@ public class DisplayReservationServlet extends HttpServlet {
                 request.setAttribute("error", "Reservation not found");
                 request.getRequestDispatcher("display-reservation-error.jsp").forward(request, response);
             }
-        } catch (SQLException e) {
-            throw new ServletException(e);
+        } catch (SQLException | NumberFormatException e) {
+            request.setAttribute("error", "Invalid ID format or database error.");
+            request.getRequestDispatcher("display-reservation-error.jsp").forward(request, response);
         }
     }
 

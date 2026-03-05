@@ -11,7 +11,6 @@ public class Guest {
     private String address;
     private LocalDateTime created_at;
     
-    // Constructors
     public Guest() {}
     
     public Guest(String first_name, String last_name, String email, String phone, String address) {
@@ -22,7 +21,6 @@ public class Guest {
         this.address = address;
     }
     
-    // Getters and Setters
     public int getGuest_id() { return guest_id; }
     public void setGuest_id(int guest_id) { this.guest_id = guest_id; }
     

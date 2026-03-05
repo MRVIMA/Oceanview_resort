@@ -37,7 +37,6 @@ public class AddReservationServlet extends HttpServlet {
             LocalDate checkInDate = LocalDate.parse(request.getParameter("check_in_date"));
             LocalDate checkOutDate = LocalDate.parse(request.getParameter("check_out_date"));
 
-            // Create guest
             Guest guest = new Guest();
             guest.setFirst_name(firstName);
             guest.setLast_name(lastName);
@@ -47,25 +46,25 @@ public class AddReservationServlet extends HttpServlet {
 
             int guestId = guestDAO.addGuest(guest);
 
-            // Calculate total amount
             double totalAmount = reservationDAO.calculateTotalAmount(roomTypeId, checkInDate, checkOutDate);
 
-            // Create reservation
             Reservation reservation = new Reservation();
             reservation.setGuest_id(guestId);
             reservation.setRoom_type_id(roomTypeId);
             reservation.setCheck_in_date(checkInDate);
             reservation.setCheck_out_date(checkOutDate);
             reservation.setTotal_amount(totalAmount);
-            reservation.setStatus("confirmed");
+            reservation.setStatus("CONFIRMED");
 
             int reservationId = reservationDAO.addReservation(reservation);
 
             request.setAttribute("reservationId", reservationId);
             request.getRequestDispatcher("reservation-success.jsp").forward(request, response);
 
-        } catch (SQLException e) {
-            throw new ServletException(e);
+        } catch (SQLException | NumberFormatException e) {
+            e.printStackTrace();
+            request.setAttribute("error", "Failed to create reservation. Please check your inputs.");
+            request.getRequestDispatcher("add-reservation.jsp").forward(request, response);
         }
     }
 

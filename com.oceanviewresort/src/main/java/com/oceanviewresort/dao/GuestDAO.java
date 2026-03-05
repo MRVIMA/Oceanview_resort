@@ -11,8 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GuestDAO {
+    
+
     public int addGuest(Guest guest) throws SQLException {
-        String sql = "INSERT INTO Guest (first_name, last_name, email, phone, address) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO guest (first_name, last_name, email, phone, address) VALUES (?, ?, ?, ?, ?)";
         
         try (Connection connection = DatabaseUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -40,7 +42,7 @@ public class GuestDAO {
     }
     
     public Guest getGuestById(int guest_id) throws SQLException {
-        String sql = "SELECT * FROM Guest WHERE guest_id = ?";
+        String sql = "SELECT * FROM guest WHERE guest_id = ?";
         
         try (Connection connection = DatabaseUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -64,7 +66,7 @@ public class GuestDAO {
     
     public List<Guest> getAllGuests() throws SQLException {
         List<Guest> guests = new ArrayList<>();
-        String sql = "SELECT * FROM Guest";
+        String sql = "SELECT * FROM guest";
         
         try (Connection connection = DatabaseUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql);
@@ -82,5 +84,36 @@ public class GuestDAO {
             }
         }
         return guests;
+    }
+
+    public boolean updateGuest(Guest guest) throws SQLException {
+        String sql = "UPDATE guest SET first_name = ?, last_name = ?, email = ?, phone = ?, address = ? WHERE guest_id = ?";
+        
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            
+            statement.setString(1, guest.getFirst_name());
+            statement.setString(2, guest.getLast_name());
+            statement.setString(3, guest.getEmail());
+            statement.setString(4, guest.getPhone());
+            statement.setString(5, guest.getAddress());
+            statement.setInt(6, guest.getGuest_id());
+            
+            int affectedRows = statement.executeUpdate();
+            return affectedRows > 0;
+        }
+    }
+
+    public boolean deleteGuest(int guest_id) throws SQLException {
+        String sql = "DELETE FROM Guest WHERE guest_id = ?";
+        
+        try (Connection connection = DatabaseUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            
+            statement.setInt(1, guest_id);
+            
+            int affectedRows = statement.executeUpdate();
+            return affectedRows > 0;
+        }
     }
 }

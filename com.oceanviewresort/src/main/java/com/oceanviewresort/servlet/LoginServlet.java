@@ -1,6 +1,7 @@
 package com.oceanviewresort.servlet;
 
 import com.oceanviewresort.dao.UserDAO;
+import com.oceanviewresort.model.User;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
@@ -24,17 +24,16 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        try {
-            if (userDAO.validateUser(username, password)) {
-                HttpSession session = request.getSession();
-                session.setAttribute("username", username);
-                response.sendRedirect("dashboard.jsp");
-            } else {
-                request.setAttribute("error", "Invalid username or password");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-            }
-        } catch (SQLException e) {
-            throw new ServletException(e);
+        User loggedInUser = userDAO.authenticateUser(username, password);
+
+        if (loggedInUser != null) {
+            HttpSession session = request.getSession();
+            session.setAttribute("username", loggedInUser.getUsername());
+            session.setAttribute("role", loggedInUser.getRole());
+            response.sendRedirect("dashboard.jsp");
+        } else {
+            request.setAttribute("error", "Invalid username or password");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }
 

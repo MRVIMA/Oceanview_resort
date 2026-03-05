@@ -13,7 +13,8 @@ public class GuestService {
     
     public boolean addGuest(Guest guest) {
         try {
-            return guestDAO.insertGuest(guest);
+            int generatedId = guestDAO.addGuest(guest);
+            return generatedId > 0;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -37,7 +38,7 @@ public class GuestService {
             return null;
         }
     }
-    
+
     public boolean updateGuest(Guest guest) {
         try {
             return guestDAO.updateGuest(guest);
@@ -46,7 +47,7 @@ public class GuestService {
             return false;
         }
     }
-    
+
     public boolean deleteGuest(int guestId) {
         try {
             return guestDAO.deleteGuest(guestId);

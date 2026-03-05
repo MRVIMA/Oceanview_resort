@@ -13,7 +13,8 @@ public class RoomTypeService {
     
     public boolean addRoomType(RoomType roomType) {
         try {
-            return roomTypeDAO.insertRoomType(roomType);
+            int generatedId = roomTypeDAO.addRoomType(roomType);
+            return generatedId > 0;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -37,7 +38,7 @@ public class RoomTypeService {
             return null;
         }
     }
-    
+
     public boolean updateRoomType(RoomType roomType) {
         try {
             return roomTypeDAO.updateRoomType(roomType);
@@ -46,7 +47,7 @@ public class RoomTypeService {
             return false;
         }
     }
-    
+
     public boolean deleteRoomType(int roomTypeId) {
         try {
             return roomTypeDAO.deleteRoomType(roomTypeId);

@@ -13,7 +13,6 @@ public class Reservation {
     private String status;
     private LocalDateTime created_at;
     
-    // Constructors
     public Reservation() {}
     
     public Reservation(int guest_id, int room_type_id, LocalDate check_in_date, 
@@ -26,7 +25,6 @@ public class Reservation {
         this.status = status;
     }
     
-    // Getters and Setters
     public int getReservation_id() { return reservation_id; }
     public void setReservation_id(int reservation_id) { this.reservation_id = reservation_id; }
     

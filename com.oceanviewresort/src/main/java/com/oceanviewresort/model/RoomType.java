@@ -9,8 +9,7 @@ public class RoomType {
     private double base_price;
     private int capacity;
     private String amenities;
-    
-    // Constructors
+
     public RoomType() {}
     
     public RoomType(String type_name, String description, double base_price, int capacity, String amenities) {
@@ -20,8 +19,7 @@ public class RoomType {
         this.capacity = capacity;
         this.amenities = amenities;
     }
-    
-    // Getters and Setters
+
     public int getRoom_type_id() { return room_type_id; }
     public void setRoom_type_id(int room_type_id) { this.room_type_id = room_type_id; }
     
