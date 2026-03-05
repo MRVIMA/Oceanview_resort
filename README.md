@@ -1,82 +1,81 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>README - Ocean View Resort</title>
-</head>
-<body>
+# Ocean View Resort - Reservation Management System 🌊🏨
 
-    <h1>Ocean View Resort - Reservation Management System 🌊🏨</h1>
+<p align="center">
+  <img src="https://komarev.com/ghpvc/?username=VimaIroshan&label=PROJECT%20VIEWS&color=0077b5&style=flat-square" alt="Views">
+</p>
 
-    <p>
-        A distributed web application developed to modernize the manual room reservation and guest record management at 
-        <strong>Ocean View Resort, Galle</strong>. This system implements a robust 3-tier MVC architecture to eliminate 
-        booking conflicts and automate financial calculations.
-    </p>
+<p align="center">
+  <a href="https://www.oracle.com/java/">
+    <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white" alt="Java">
+  </a>
+  <a href="https://www.mysql.com/">
+    <img src="https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL">
+  </a>
+  <a href="https://tomcat.apache.org/">
+    <img src="https://img.shields.io/badge/Apache_Tomcat-F8DC75?style=for-the-badge&logo=apache-tomcat&logoColor=black" alt="Tomcat">
+  </a>
+</p>
 
-    <hr>
 
-    <h2>🚀 Core Functionalities (Scenario Requirements)</h2>
-    <ul>
-        <li><strong>User Authentication:</strong> Secure login system for Admins and Receptionists.</li>
-        <li><strong>New Reservation:</strong> Comprehensive guest registration and booking details storage.</li>
-        <li><strong>Display Details:</strong> Retrieval and display of specific booking information.</li>
-        <li><strong>Billing Engine:</strong> Automated computation of total stay costs based on nights and room rates.</li>
-        <li><strong>Help Section:</strong> Interactive guidelines for new staff members.</li>
-        <li><strong>Exit System:</strong> Secure session invalidation and logout.</li>
-    </ul>
+---
 
-    <hr>
+A distributed web application developed to modernize the manual room reservation and guest record management at **Ocean View Resort, Galle**. This system implements a robust 3-tier MVC architecture to eliminate booking conflicts and automate financial calculations.
 
-    <h2>🏗️ Architectural Design</h2>
-    <p>
-        The system follows the <strong>Model-View-Controller (MVC)</strong> design pattern to ensure high maintainability 
-        and separation of concerns.
-    </p>
-    <ul>
-        <li><strong>Presentation Layer:</strong> JSP, CSS, and JSTL for a responsive, sophisticated UI.</li>
-        <li><strong>Business Logic Layer:</strong> Java Servlets managing the request-response lifecycle.</li>
-        <li><strong>Data Access Layer:</strong> DAO pattern for decoupled MySQL database interactions.</li>
-    </ul>
+---
 
-    
+## 🚀 Core Functionalities (Scenario Requirements)
 
-    <hr>
+- **User Authentication:** Secure login system with role-based access for Admins and Receptionists.
+- **New Reservation:** Comprehensive guest registration and secure booking detail storage.
+- **Display Details:** Efficient retrieval and display of specific booking information via unique reservation numbers.
+- **Billing Engine:** Automated computation of total stay costs based on nights and specific room rates.
+- **Help Section:** Integrated interactive guidelines for new staff members.
+- **Exit System:** Secure session invalidation and logout functionality.
 
-    <h2>🧪 Quality Assurance & TDD</h2>
-    <p>
-        I utilized <strong>Test-Driven Development (TDD)</strong> with the <strong>Red-Green-Refactor</strong> 
-        lifecycle to ensure the reliability of the billing and reservation modules.
-    </p>
-    <ul>
-        <li><strong>Automation:</strong> JUnit 5 test suites for the <code>ReservationService</code>.</li>
-        <li><strong>Validation:</strong> MySQL Triggers for chronological date constraints.</li>
-        <li><strong>Traceability:</strong> All managerial requirements are mapped to specific test cases.</li>
-    </ul>
+---
 
-    
+## 🏗️ Architectural Design
 
-    <hr>
+The system follows the **Model-View-Controller (MVC)** design pattern to ensure high maintainability, scalability, and separation of concerns.
 
-    <h2>🛠️ Installation & Setup</h2>
-    <ol>
-        <li>Clone the repository: <code>git clone https://github.com/VimaIroshan/OceanViewResort.git</code></li>
-        <li>Import the project into <strong>Eclipse IDE</strong> as a Dynamic Web Project.</li>
-        <li>Create a MySQL database named <code>oceanview_db</code> and run the provided SQL scripts.</li>
-        <li>Configure <code>DatabaseUtil.java</code> with your local MySQL credentials.</li>
-        <li>Deploy the application on <strong>Apache Tomcat 9.0+</strong>.</li>
-    </ol>
+- **Presentation Layer:** Developed using **JSP, CSS, and JSTL** for a responsive and sophisticated UI.
+- **Business Logic Layer:** **Java Servlets** managing the request-response lifecycle and session handling.
+- **Data Access Layer:** **DAO Pattern** implemented for decoupled and secure MySQL database interactions.
 
-    <hr>
 
-    <hr>
 
-    <h2>👤 Author</h2>
-    <p>
-        <strong>Vimukthi Iroshan Mahanama Hewage</strong><br>
-        BSc (Hons) in Software Engineering<br>
-        Cardiff Metropolitan University | Student ID: st20286419
-    </p>
+---
 
-</body>
-</html>
+## 🧪 Quality Assurance & TDD
+
+I utilized **Test-Driven Development (TDD)** following the **Red-Green-Refactor** lifecycle to ensure the total reliability of the billing and reservation modules.
+
+- **Automation:** **JUnit 5** automated test suites specifically for the `ReservationService` logic.
+- **Validation:** Advanced **MySQL Triggers** implemented for chronological date constraints (Check-out > Check-in).
+- **Traceability:** A detailed Traceability Matrix ensures all managerial requirements are mapped to specific, passing test cases.
+
+
+
+---
+
+## 🛠️ Installation & Setup
+
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/VimaIroshan/OceanViewResort.git](https://github.com/VimaIroshan/OceanViewResort.git)
+
+
+---
+
+## 🎓 Academic Profile
+
+| Attribute | Details |
+| :--- | :--- |
+| **Author** | **Vimukthi Iroshan Mahanama Hewage** |
+| **Program** | BSc (Hons) in Software Engineering |
+| **Institution** | Cardiff Metropolitan University |
+| **Student ID** | `st20286419` |
+| **Project** | Ocean View Resort Management System |
+| **Module** | Distributed Web Applications |
+
+---
